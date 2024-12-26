@@ -59,6 +59,10 @@ import {Component/Variable} from "path";
 
 These 2 are the most important hooks.
 
+# 2 Type of routing in webapps
+    - Client Side Routing - If you are using react router all components are laoded into the app and if we just click on the desired route the component is just loaded not the whole page which makes it a single page application
+    - Server Side Routing - If you are using anchor tags then the whole page reloads, whole index.html network call is made to the server and the UI is rendered on our website.   
+
 
 
 
