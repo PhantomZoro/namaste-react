@@ -1,4 +1,4 @@
-import React from "react";
+import React,{lazy, Suspense} from "react";
 import ReactDOM from "react-dom/client";
 
 import Header from "./components/Header";
@@ -9,9 +9,12 @@ import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 
+
 //React Element => Is an object which when rendered onto DOM it becomes a HTML Element
 
 //JSX is transpiled by Parcel before it reached the JS engine helped by Babel. Babel transpiled the JSX code into browser compatible/JS understandable code => React.createElement
+
+const Grocery = lazy (()=>import("./components/Grocery"))
 
 const AppLayout = () =>{
     return (
@@ -38,6 +41,10 @@ const appRouter = createBrowserRouter([
             {
                 path: "/contact",
                 element: <Contact/>
+            },
+            {
+                path: "/grocery",
+                element: <Suspense fallback={<h1>Loading...</h1>}><Grocery/></Suspense>
             },
             {
                 path:"/restaurants/:resId",
