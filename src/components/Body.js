@@ -1,9 +1,11 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, {withOpenLabel} from "./RestaurantCard";
 import { useState } from "react";
 import { useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import { useContext } from "react";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
 
@@ -12,6 +14,10 @@ const Body = () => {
     const [filteredRestaurants, setFilteredRestaurants] = useState([]);
     const [searchText, setSearchText] = useState("");
     //Whenever a state variable updates, react triggers reconciliatioin cycle(re-renders the component)
+
+    const RestaurantCardOpen = withOpenLabel(RestaurantCard);
+
+    const {setUserName, loggedInUser} = useContext(UserContext)
     
     useEffect( ()=> {
         fetchData();
@@ -24,7 +30,7 @@ const Body = () => {
         );
         const json = await data.json();
 
-        console.log(json);
+        //console.log(json);
         const extractedRestaurants = json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
         console.log(extractedRestaurants);
         setListOfRestaurants(extractedRestaurants);
@@ -63,14 +69,8 @@ const Body = () => {
                     </button>
                 </div>
                 <div className="search m-4 p-4 flex items-center">
-                <button className="px-4 py-2 bg-gray-100 rounded-lg" onClick={() => {                    
-                    const filteredListOfRestaurants = listOfRestaurants.filter((res) => {
-                        return res.info.avgRating > 4.3;
-                    });
-                    setFilteredRestaurants(filteredListOfRestaurants);
-                }}>
-                    Top Rated Restaurants
-                </button>
+                <label className="p-4">User Name:</label>
+                <input className="border border-black p-1" onChange={(e)=>setUserName(e.target.value)} value={loggedInUser}/>
                 </div>
                 
             </div>
@@ -78,7 +78,9 @@ const Body = () => {
                 {
                     filteredRestaurants.map((restaurant) => {
                         return <Link to={"/restaurants/"+restaurant.info.id} key={restaurant.info.id}>
-                            <RestaurantCard resData={restaurant}/>
+                            {
+                                restaurant.info.isOpen ? <RestaurantCardOpen resData={restaurant}/> : <RestaurantCard resData={restaurant}/>
+                            }
                         </Link>
                     })
                 }

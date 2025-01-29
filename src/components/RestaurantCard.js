@@ -21,4 +21,19 @@ const RestaurantCard = (props) => {
     )
 };
 
+//Higher Order component
+
+//Input as the restaurant card and the output will be the Open Restaurant or promoted 
+
+export const withOpenLabel = (RestaurantCard) =>{
+    return (props) => {
+        return (
+            <div>
+                <label className="absolute bg-black text-white m-2 p-2 rounded-lg">Open</label>
+                <RestaurantCard {...props}/>
+            </div>
+        )
+    }
+} 
+
 export default RestaurantCard;

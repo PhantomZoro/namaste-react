@@ -1,4 +1,4 @@
-import React,{lazy, Suspense} from "react";
+import React,{lazy, Suspense, useState, useEffect} from "react";
 import ReactDOM from "react-dom/client";
 
 import Header from "./components/Header";
@@ -8,6 +8,7 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
+import UserContext from "./utils/UserContext";
 
 
 //React Element => Is an object which when rendered onto DOM it becomes a HTML Element
@@ -17,11 +18,25 @@ import RestaurantMenu from "./components/RestaurantMenu";
 const Grocery = lazy (()=>import("./components/Grocery"))
 
 const AppLayout = () =>{
+
+    const [userName, setUserName] = useState();
+
+    //Authentication
+    useEffect(() => {
+        const data = {
+            name: "Phaneendra B"
+        }
+        setUserName(data.name);
+    }, [])
+
     return (
-        <div className="app">
-            <Header/>
-            <Outlet/>
-        </div>
+        <UserContext.Provider value = {{loggedInUser: userName, setUserName}}>
+            <div className="app">
+                <Header/>
+                <Outlet/>
+            </div>
+        </UserContext.Provider>
+        
     )
 } 
 
