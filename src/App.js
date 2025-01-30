@@ -9,6 +9,9 @@ import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 import UserContext from "./utils/UserContext";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
+import Cart from "./components/Cart";
 
 
 //React Element => Is an object which when rendered onto DOM it becomes a HTML Element
@@ -30,12 +33,15 @@ const AppLayout = () =>{
     }, [])
 
     return (
-        <UserContext.Provider value = {{loggedInUser: userName, setUserName}}>
+        <Provider store={appStore}>
+            <UserContext.Provider value = {{loggedInUser: userName, setUserName}}>
             <div className="app">
                 <Header/>
                 <Outlet/>
             </div>
-        </UserContext.Provider>
+            </UserContext.Provider>
+        </Provider>
+        
         
     )
 } 
@@ -64,6 +70,10 @@ const appRouter = createBrowserRouter([
             {
                 path:"/restaurants/:resId",
                 element: <RestaurantMenu/>
+            },
+            {
+                path:"/cart",
+                element: <Cart/>
             }
         ],
         errorElement: <Error/>

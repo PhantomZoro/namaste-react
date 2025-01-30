@@ -63,6 +63,15 @@ These 2 are the most important hooks.
     - Client Side Routing - If you are using react router all components are laoded into the app and if we just click on the desired route the component is just loaded not the whole page which makes it a single page application
     - Server Side Routing - If you are using anchor tags then the whole page reloads, whole index.html network call is made to the server and the UI is rendered on our website.   
 
+# Redux Toolkit 
+    - Install @reduxjs/toolkit and react-redux (These 2 libraries for Redux)
+    - Build our own store 
+    - Connect our store to our app
+    - Create Slice(Cart) to add items to the cart 
+    - Dispatch(action)
+    - Selector (to subscribe to our Cart slice)
+    
+
 
 
 
